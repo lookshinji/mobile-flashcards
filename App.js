@@ -5,6 +5,7 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { Constants } from 'expo'
 // Utils
+import { setLocalNotification } from './utils/notifications'
 import { midnightBlue, white } from './utils/colors'
 import { SimpleLineIcons } from "@expo/vector-icons";
 // Components
@@ -25,6 +26,10 @@ function AppStatusBar ({backgroundColor, ...props}) {
  }
 
 export default class App extends Component {
+  componentDidMount(){
+    setLocalNotification()
+  }
+
   render() {
     return (
       <Provider store={createStore(reducer)}>

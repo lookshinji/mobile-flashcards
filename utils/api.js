@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native'
 
-export const DECKS_STORAGE_KEY = 'cards:decks'
+export const DECKS_STORAGE_KEY = 'flashcards:decks'
 
 export function setInitialData (){
   const initialData = {

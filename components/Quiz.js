@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
+import { clearLocalNotification, setLocalNotification } from '../utils/notifications'
 
 class Quiz extends Component {
   state = {
@@ -47,6 +48,8 @@ class Quiz extends Component {
     const question = questions[currQuestion]
     const score = Math.round(correct / questions.length * 100, 2)
 
+    !question && clearLocalNotification().then(setLocalNotification())
+
     return (
     !question
     ? <ScrollView>
@@ -56,9 +59,13 @@ class Quiz extends Component {
             onPress={() => this.restart()}>
             <Text>Restart Quiz</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Deck', { deckId: deck.title })}>
+            <Text>Back to Deck</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
-    :<ScrollView>
+    : <ScrollView>
         <Text>
           {currQuestion + 1}/{questions.length}
         </Text>
