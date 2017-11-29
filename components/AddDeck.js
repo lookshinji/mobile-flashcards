@@ -1,30 +1,49 @@
 import React, { Component } from 'react'
 import { Text, View, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
+import { connect } from 'react-redux'
+//Utils
+import { submitDeck } from '../utils/api'
 import { white, midnightBlue, asbestos, greenSea, silver } from './../utils/colors'
+//Actions
+import { addDeck } from '../actions'
 
 class AddDeck extends Component {
   state = {
     input: null
   }
-  
+
+  handleAddDeck = () => {
+    const { addDeck, navigation } = this.props
+    const { input } = this.state
+    submitDeck(input)
+      .then(res => {
+        addDeck(input)
+        navigation.navigate('Deck', { deckId: input })
+        this.setState(() => ({
+          input: null
+        }))
+    })
+  }
+
   handleTextInput = input => {
     this.setState(() => ({
       input
     }))
   }
-  
+
   render() {
-    const { input } = this.state;
+    const { input } = this.state
     return (
       <View style={styles.container}>
         <TextInput
           style={styles.textInput}
           value={input}
-          placeholder="Deck Title"
+          placeholder='Deck Title'
           onChangeText={this.handleTextInput}
         />
         <TouchableOpacity
           style={!input ? [styles.addBtn, styles.disabledBtn] : styles.addBtn}
+          onPress={this.handleAddDeck}
           disabled={!input}
         >
           <Text style={styles.btnText}>Add Deck</Text>
@@ -34,7 +53,17 @@ class AddDeck extends Component {
   }
 }
 
-export default AddDeck;
+function mapStateToProps(decks, props) {
+  return {}
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addDeck: data => dispatch(addDeck(data))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddDeck)
 
 const styles = StyleSheet.create({
   container: {

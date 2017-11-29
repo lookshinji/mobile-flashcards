@@ -1,27 +1,49 @@
 import React, { Component } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
-import { white, midnightBlue, asbestos, greenSea, silver } from './../utils/colors'
+import { connect } from 'react-redux'
+//utils
+import { white, midnightBlue, asbestos, greenSea, silver } from '../utils/colors'
 
 class Deck extends Component {
   render() {
+    const { deck, navigation } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={styles.titleText}>Título do Deck</Text>
-          <Text style={{color: asbestos, fontSize: 20}}># cards</Text>
+          <Text style={styles.titleText}>{deck.title}</Text>
+          <Text style={{color: asbestos, fontSize: 20}}>{deck.questions.length} {deck.questions.length === 1 ?
+          ' card' : ' cards'}</Text>
         </View>
-        <TouchableOpacity style={[styles.quizBtn, styles.disabledBtn]}>
+        <TouchableOpacity
+          style={deck.questions.length === 0
+            ? [styles.quizBtn, styles.disabledBtn]
+            : styles.addBtn }
+          disabled={deck.questions.length === 0 ? true : false}
+          onPress={() =>
+            navigation.navigate('Quiz', { deckId: deck.title })
+          }>
           <Text style={styles.btnText}>Start Quiz</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.addBtn}>
+        <TouchableOpacity
+          style={styles.addBtn}
+          onPress={() =>
+            navigation.navigate('AddCard', { deckId: deck.title })
+          }>
           <Text style={styles.btnText}>Add Question</Text>
         </TouchableOpacity>
       </View>
-    );
+    )
   }
 }
 
-export default Deck;
+function mapStateToProps(decks, props) {
+  return {
+    decks,
+    deck: decks[props.navigation.state.params.deckId]
+  }
+}
+
+export default connect(mapStateToProps)(Deck)
 
 const styles = StyleSheet.create({
   container: {

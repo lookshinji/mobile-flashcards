@@ -1,34 +1,54 @@
 import React, { Component } from 'react'
 import { Text, View, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
-import { white, midnightBlue, asbestos, greenSea, silver } from './../utils/colors'
+import { connect } from 'react-redux'
+//Utils
+import { submitCard } from '../utils/api'
+import { white, midnightBlue, silver } from './../utils/colors'
+//Actions
+import { addCard } from './../actions'
 
-class AddDeck extends Component {
+
+class AddCard extends Component {
   state = {
     question: null,
     answer: null
   }
-  
+
+  handleAddCard = () => {
+    const { deck, addCard, navigation } = this.props
+    const { question, answer } = this.state
+    submitCard(deck, { question, answer })
+    .then(res => {
+      addCard(deck, { question, answer })
+      navigation.navigate('Deck', { deckId: deck.title })
+      this.setState(() => ({
+        question: null,
+        answer: null
+      }))
+    })
+  }
+
   handleQuestionInput = question => {
-    this.setState(() => ({ question }));
-  };
-  
+    this.setState(() => ({ question }))
+  }
+
   handleAnswerInput = answer => {
-    this.setState(() => ({ answer }));
-  };
-  
+    this.setState(() => ({ answer }))
+  }
+
   render() {
-    const { question, answer } = this.state;
+    const { question, answer } = this.state
     return (
       <View style={styles.container}>
         <TextInput
           style={styles.textInput}
-          placeholder="Question"
+          placeholder='Question'
           value={question}
           onChangeText={this.handleQuestionInput}
         />
         <TextInput
           style={styles.textInput}
-          placeholder="Answer"
+          placeholder='Answer'
           value={answer}
           onChangeText={this.handleAnswerInput}
         />
@@ -38,16 +58,30 @@ class AddDeck extends Component {
               ? [styles.addBtn, styles.disabledBtn]
               : styles.addBtn
           }
+          onPress={this.handleAddCard}
           disabled={!question || !answer}
         >
           <Text style={styles.btnText}>Submit</Text>
         </TouchableOpacity>
       </View>
-    );
+    )
   }
 }
 
-export default AddDeck;
+function mapStateToProps(decks, props) {
+  const deck = decks[props.navigation.state.params.deckId]
+  return {
+    deck
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addCard: (deck, card) => dispatch(addCard(deck, card))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddCard)
 
 const styles = StyleSheet.create({
   container: {
