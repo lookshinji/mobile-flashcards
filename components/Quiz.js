@@ -43,7 +43,7 @@ class Quiz extends Component {
   }
 
   render() {
-    const { deck, questions } = this.props
+    const { deck, questions, navigation } = this.props
     const { answerView, currQuestion, correct} = this.state
     const question = questions[currQuestion]
     const score = Math.round(correct / questions.length * 100, 2)
@@ -60,7 +60,7 @@ class Quiz extends Component {
             <Text>Restart Quiz</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Deck', { deckId: deck.title })}>
+            onPress={() => navigation.navigate('Deck', { deckId: deck.title })}>
             <Text>Back to Deck</Text>
           </TouchableOpacity>
         </View>
@@ -101,7 +101,8 @@ class Quiz extends Component {
 }
 
 function mapStateToProps(decks, props) {
-  const deck = decks[props.navigation.state.params.deckId];
+  const { deckId } = props.navigation.state.params
+  const deck = decks[deckId];
   return {
     deck,
     questions: deck.questions.map((question, index) => {

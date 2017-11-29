@@ -69,7 +69,8 @@ class AddCard extends Component {
 }
 
 function mapStateToProps(decks, props) {
-  const deck = decks[props.navigation.state.params.deckId]
+  const { deckId } = props.navigation.state.params
+  const deck = decks[deckId]
   return {
     deck
   }

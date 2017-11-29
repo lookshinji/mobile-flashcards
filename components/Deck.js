@@ -37,9 +37,10 @@ class Deck extends Component {
 }
 
 function mapStateToProps(decks, props) {
+  const { deckId } = props.navigation.state.params
   return {
     decks,
-    deck: decks[props.navigation.state.params.deckId]
+    deck: decks[deckId]
   }
 }
 
