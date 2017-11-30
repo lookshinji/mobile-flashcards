@@ -43,7 +43,6 @@ class DeckList extends Component {
     const { decks } = this.props
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>FlashCards</Text>
         <FlatList
           data={decks}
           renderItem={this._renderItem}
@@ -80,14 +79,7 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     backgroundColor: clouds,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: midnightBlue,
-    textAlign: 'center',
-    marginTop: 30,
-    marginBottom: 10
+    paddingTop: 10,
   },
   deckContainer: {
     flex:1,
@@ -99,7 +91,7 @@ const styles = StyleSheet.create({
     backgroundColor: white,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.1,
     shadowRadius: 3,
   },
   deckRow: {
@@ -113,7 +105,7 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: 'bold',
     color: midnightBlue,
   },
@@ -121,7 +113,7 @@ const styles = StyleSheet.create({
     flex:1,
     textAlign: 'right',
     color: greenSea,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: 'bold'
   }
 })

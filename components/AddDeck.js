@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, TextInput, StyleSheet } from 'react-nativ
 import { connect } from 'react-redux'
 //Utils
 import { submitDeck } from '../utils/api'
-import { white, midnightBlue, asbestos, greenSea, silver } from './../utils/colors'
+import { white, midnightBlue, greenSea, silver, clouds } from './../utils/colors'
 //Actions
 import { addDeck } from '../actions'
 
@@ -35,6 +35,7 @@ class AddDeck extends Component {
     const { input } = this.state
     return (
       <View style={styles.container}>
+        <Text style={styles.title}>Create here your Deck!</Text>
         <TextInput
           style={styles.textInput}
           value={input}
@@ -68,8 +69,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(AddDeck)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: white,
-    justifyContent: 'center',
+    backgroundColor: clouds,
+    paddingTop: 30
+  },
+  title: {
+    color: midnightBlue,
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   textInput: {
     alignSelf: 'center',

@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, TextInput, StyleSheet } from 'react-nativ
 import { connect } from 'react-redux'
 //Utils
 import { submitCard } from '../utils/api'
-import { white, midnightBlue, silver } from './../utils/colors'
+import { white, midnightBlue, silver, clouds } from './../utils/colors'
 //Actions
 import { addCard } from './../actions'
 
@@ -38,8 +38,11 @@ class AddCard extends Component {
 
   render() {
     const { question, answer } = this.state
+    const { deck } = this.props
     return (
       <View style={styles.container}>
+        <Text style={styles.title}>Add a new question to </Text>
+        <Text style={styles.title}>{deck.title} Deck</Text>
         <TextInput
           style={styles.textInput}
           placeholder='Question'
@@ -87,8 +90,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(AddCard)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: white,
-    justifyContent: 'center',
+    backgroundColor: clouds,
+    padding: 10,
+    paddingTop: 30
+  },
+  title: {
+    color: midnightBlue,
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   textInput: {
     alignSelf: 'center',
@@ -101,12 +111,12 @@ const styles = StyleSheet.create({
   },
   addBtn: {
     backgroundColor: midnightBlue,
-    padding:10,
-    margin: 5,
+    padding: 10,
+    margin: 15,
     borderRadius: 7,
     height: 45,
-    marginLeft: 40,
-    marginRight: 40,
+    marginLeft: 25,
+    marginRight: 25,
   },
   disabledBtn: {
     backgroundColor: silver

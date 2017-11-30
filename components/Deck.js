@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 //utils
-import { white, midnightBlue, asbestos, greenSea, silver } from '../utils/colors'
+import { white, midnightBlue, clouds, asbestos, greenSea, silver } from '../utils/colors'
 
 class Deck extends Component {
   render() {
@@ -11,13 +11,13 @@ class Deck extends Component {
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={styles.titleText}>{deck.title}</Text>
-          <Text style={{color: asbestos, fontSize: 20}}>{deck.questions.length} {deck.questions.length === 1 ?
+          <Text style={styles.numberText}>{deck.questions.length} {deck.questions.length === 1 ?
           ' card' : ' cards'}</Text>
         </View>
         <TouchableOpacity
           style={deck.questions.length === 0
             ? [styles.quizBtn, styles.disabledBtn]
-            : styles.addBtn }
+            : styles.quizBtn }
           disabled={deck.questions.length === 0 ? true : false}
           onPress={() =>
             navigation.navigate('Quiz', { deckId: deck.title })
@@ -49,17 +49,21 @@ export default connect(mapStateToProps)(Deck)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: white,
-    justifyContent: 'center',
+    backgroundColor: clouds,
+    paddingTop: 30,
   },
   textContainer: {
-    padding:20,
+    paddingBottom:20,
     alignItems: 'center',
   },
   titleText: {
     color: midnightBlue,
     fontSize: 25,
     fontWeight: 'bold'
+  },
+  numberText: {
+    color: asbestos,
+    fontSize: 20
   },
   quizBtn: {
     backgroundColor: greenSea,
