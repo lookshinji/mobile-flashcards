@@ -7,7 +7,7 @@ import { Constants } from 'expo'
 // Utils
 import { setLocalNotification } from './utils/notifications'
 import { midnightBlue, white } from './utils/colors'
-import { SimpleLineIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 // Components
 import DeckList from './components/DeckList'
 import Deck from './components/Deck'
@@ -49,16 +49,16 @@ const TabsNav = TabNavigator(
       navigationOptions: {
         tabBarLabel: 'Decks',
         tabBarIcon: ({ tintColor }) => (
-          <SimpleLineIcons name='notebook' size={30} color={tintColor} />
+          <MaterialCommunityIcons name='cards-outline' size={30} color={tintColor} />
         )
       }
     },
     AddDeck: {
       screen: AddDeck,
       navigationOptions: {
-        tabBarLabel: 'New Deck',
+        tabBarLabel: 'Add Deck',
         tabBarIcon: ({ tintColor }) => (
-          <SimpleLineIcons name='plus' size={30} color={tintColor} />
+          <MaterialCommunityIcons name='plus-circle-outline' size={30} color={tintColor} />
         )
       }
     }
@@ -68,6 +68,7 @@ const TabsNav = TabNavigator(
       header: null
     },
     tabBarOptions: {
+      animationEnabled: true,
       activeTintColor: Platform.OS === 'ios' ? midnightBlue : white,
       style: {
         height: 56,
